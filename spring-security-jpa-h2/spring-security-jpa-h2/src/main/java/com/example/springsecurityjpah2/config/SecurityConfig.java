@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -36,11 +37,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-
-        http.authorizeRequests().antMatchers("/rest/**").authenticated().anyRequest().permitAll().and()
+        http.authorizeRequests().antMatchers("/secure/**").authenticated().anyRequest().permitAll().and()
                 //.authorizeRequests().antMatchers("/secure/**").authenticated().anyRequest().hasAnyRole("ADMIN").and()
         .formLogin().permitAll();
 
+//these were not functional but were working in other prj
+//        http
+//                .authorizeRequests()
+//                .antMatchers("/secure/**").hasRole("ADMIN")
+//                .antMatchers("/rest/**").hasRole("USER")
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin();
+//        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+//        .invalidSessionUrl("/login").and().cors().and().csrf().disable()
+//                .authorizeRequests()
+//                .antMatchers("/").permitAll()
+//                .antMatchers("/register-user").permitAll()
+//                .anyRequest().authenticated()
+//                .and().formLogin()
+//                .and().logout().logoutUrl("/logout");
 
 
     }
