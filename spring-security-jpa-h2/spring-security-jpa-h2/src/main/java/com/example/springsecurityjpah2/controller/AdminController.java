@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
-@RequestMapping("/secure")
+@RequestMapping("/secure/auth/")
 public class AdminController {
 
 	@Autowired
@@ -31,11 +30,18 @@ public class AdminController {
 		return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
 	}
 
-	@PostMapping("/add")
+	//@PreAuthorize("hasAnyRole('ADMIN')")
+	@PostMapping("/admin/add")
 	public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) throws Exception {
 		String pwd = userDto.getPassword();
 		String encrypt = passwordEncoder.encode(pwd);
 		userDto.setPassword(encrypt);
 		return new ResponseEntity<UserDto>(userService.save(userDto), HttpStatus.OK);
+	}
+
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@GetMapping("/admin/all")
+	public String securedHello() {
+		return "Secured Hello";
 	}
 }

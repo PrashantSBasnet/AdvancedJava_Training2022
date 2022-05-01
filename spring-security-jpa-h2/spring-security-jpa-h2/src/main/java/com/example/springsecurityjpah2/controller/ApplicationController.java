@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/rest")
+@RequestMapping("/rest/auth")
 public class ApplicationController {
 
     @GetMapping("/process")
     public String greeting() {
-        return "spring security example";
+        return "processing...";
     }
 
 }
