@@ -37,9 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/secure/**").authenticated().anyRequest().permitAll().and()
-                //.authorizeRequests().antMatchers("/secure/**").authenticated().anyRequest().hasAnyRole("ADMIN").and()
-        .formLogin().permitAll();
+        http.authorizeRequests().antMatchers("/rest/**").authenticated().anyRequest().permitAll()
+                .antMatchers("/secure/**").authenticated().anyRequest().hasAnyRole("ADMIN").and()
+                .formLogin().permitAll();
 
 //these were not functional but were working in other prj
 //        http
